@@ -10,14 +10,34 @@ def make_dictionary(arr: list) -> dict:
     return heads
 
 
-def generate_sentence(dic: dict, word: str) -> list:
+def generate_pseudo_sentence(dic: dict) -> list:
+    word = get_first_word(dic)
     res = [word]
-    for _ in range(9):
+    while True:
         keys = list(dic[word].keys())
         weights = list(dic[word].values())
-        res += choices(keys, weights)
-        word = res[-1]
+        [word] = choices(keys, weights)
+        if len(res) >= 5 and is_last_word(word):
+            res.append(word)
+            break
+        elif len(res) < 5 and is_last_word(word):
+            continue
+        else:
+            res.append(word)
     return res
+
+
+def get_first_word(dic: dict) -> str:
+    arr = list(dic.keys())
+    word = choice(arr)
+    while not word[0].isupper() or is_last_word(word):
+        word = choice(arr)
+    arr.clear()
+    return word
+
+
+def is_last_word(word: str) -> bool:
+    return word[-1] in (".", "!", "?")
 
 
 if __name__ == "__main__":
@@ -25,8 +45,6 @@ if __name__ == "__main__":
     with open(filename, "r", encoding="utf-8") as f:
         bigrams = list(ngrams(f.read().split(), 2))
         dictionary = make_dictionary(bigrams)
-        first_word = choice(list(dictionary.keys()))
         for _ in range(10):
-            sentence = generate_sentence(dictionary, first_word)
+            sentence = generate_pseudo_sentence(dictionary)
             print(" ".join(sentence))
-            first_word = sentence[-1]
