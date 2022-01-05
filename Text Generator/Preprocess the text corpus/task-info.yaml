@@ -24041,6 +24041,9 @@ files:
   text: |
     # Write your code here
   learner_created: false
-feedback_link: https://hyperskill.org/projects/134/stages/714/implement#comment
-status: Unchecked
+feedback_link: https://hyperskill.org/learn/step/11139#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: Wed, 05 Jan 2022 04:00:09 UTC
 record: -1
