@@ -1,13 +1,23 @@
 from nltk.util import ngrams
 from collections import defaultdict
+from random import choice, choices
 
 
-def make_dictionary(arr):
+def make_dictionary(arr: list) -> dict:
     heads = defaultdict(dict)
     for h, t in arr:
         heads[h][t] = heads[h].get(t, 0) + 1
-
     return heads
+
+
+def generate_sentence(dic: dict, word: str) -> list:
+    res = [word]
+    for _ in range(9):
+        keys = list(dic[word].keys())
+        weights = list(dic[word].values())
+        res += choices(keys, weights)
+        word = res[-1]
+    return res
 
 
 if __name__ == "__main__":
@@ -15,18 +25,8 @@ if __name__ == "__main__":
     with open(filename, "r", encoding="utf-8") as f:
         bigrams = list(ngrams(f.read().split(), 2))
         dictionary = make_dictionary(bigrams)
-        while True:
-            head = input()
-            if head == "exit":
-                break
-            try:
-                tails = dictionary[head]
-                print(f"Head: {head}")
-                for tail, val in tails.items():
-                    print(f"Tail: {tail}\tCount: {val}")
-            except KeyError:
-                print("Key Error. The requested word is not in the model. Please input another word.")
-            except (TypeError, ValueError):
-                print("Type Error. Please input an integer.")
-            except IndexError:
-                print("Index Error. Please input a value that is not greater than the number of all bigrams.")
+        first_word = choice(list(dictionary.keys()))
+        for _ in range(10):
+            sentence = generate_sentence(dictionary, first_word)
+            print(" ".join(sentence))
+            first_word = sentence[-1]
