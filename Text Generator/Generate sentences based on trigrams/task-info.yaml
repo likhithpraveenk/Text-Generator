@@ -24000,5 +24000,9 @@ files:
     The Queen in the North! The Queen in the North! The Queen in the North! The Queen in the North! The Queen in the North!
   learner_created: false
 feedback_link: https://hyperskill.org/learn/step/11144#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Well done! You've finished the project. Select a new project on <a href="https://hyperskill.org/projects">JetBrains
+    Academy</a> to continue learning.
+  time: Wed, 05 Jan 2022 06:56:58 UTC
 record: -1
